@@ -11,7 +11,7 @@ _require () {
 _require jq curl fzf
 
 # Get themes
-status_code=$(curl -I "https://github.com/AvinashReddy3108/Gogh4Termux" 2>&1 | awk '/HTTP\// {print $2}')
+status_code=$(curl -s -o /dev/null -I -w "%{http_code}" "https://github.com/AvinashReddy3108/Gogh4Termux")
 if [ "$status_code" -eq "200" ]; then
     echo "Fetching themes list from repository, please wait."
     theme=$(curl -fSsL https://api.github.com/repos/AvinashReddy3108/Gogh4Termux/git/trees/master | jq -r '.tree[] | select (.path | contains(".properties")) | .path' | fzf)
